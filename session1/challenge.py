@@ -1,39 +1,37 @@
-import timeit
-import random
+def bubble_sort_optimised(lst):
+    """
+    Optimised bubble sort that exits early if no swaps occurred in a pass,
+    meaning the list is already sorted.
+    """
+    n = len(lst)
 
-def bubble_sort(arr):
-    n = len(arr)
-    
     for i in range(n):
-        swapped = False
-        
+        swapped = False  
+
         for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                swapped = True
-        
+            if lst[j] > lst[j + 1]:
+                lst[j], lst[j + 1] = lst[j + 1], lst[j]
+                swapped = True  
+
         if not swapped:
+            print(f"  Early exit after {i + 1} pass(es)!")
             break
-    return arr
 
-setup_code = """
-from __main__ import bubble_sort
-import random
-arr = [random.randint(1,1000) for _ in range(1000)]
-"""
-
-time_taken = timeit.timeit(
-    "bubble_sort(arr.copy())",
-    setup = setup_code,
-    number=10
-)
-
-average_time = time_taken / 10
-
-print(f"Total time:, {time_taken:.4f} seconds")
-
-print(f"Average time per run: {average_time * 1000:.3f} ms")
+    return lst
 
 
+print("Test 1: Already sorted")
+result = bubble_sort_optimised([1, 2, 3, 4, 5])
+print(result)
 
+print("\nTest 2: Reverse sorted (worst case)")
+result = bubble_sort_optimised([5, 4, 3, 2, 1])
+print(result)
 
+print("\nTest 3: Nearly sorted")
+result = bubble_sort_optimised([1, 2, 4, 3, 5])
+print(result)
+
+print("\nTest 4: Random order")
+result = bubble_sort_optimised([64, 34, 25, 12, 22, 11, 90])
+print(result)
