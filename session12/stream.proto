@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package stream;
+
+service CounterService {
+    rpc CountUp (CountRequest) returns (stream CountReply) {}
+}
+
+message CountRequest {
+    double number = 1;
+    int32 steps = 2;
+}
+
+message CountReply {
+    double value = 1;
+    int32 step = 2;
+}
